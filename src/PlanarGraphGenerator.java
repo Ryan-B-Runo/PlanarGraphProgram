@@ -21,7 +21,13 @@ public class PlanarGraphGenerator {
     public static SimpleGraph<Integer, DefaultEdge> genPlanarGraph(int n) {
         Random rand = new Random();
 
-        int m = rand.nextInt(n-1, 3*n-5);
+        int m;
+
+        if (n < 3) {
+            m = n - 1;
+        }else {
+            m = rand.nextInt(n-1, 3*n-5);
+        }
 
         // Set up generation objects
         SimpleGraph<Integer, DefaultEdge> g = new SimpleGraph<>(DefaultEdge.class);

@@ -15,14 +15,17 @@ public class PlanarGraph extends Graph {
         super();
     }
 
-    public void addRandomVertices(int maxVertices, JPanel panel) {
+    public void addRandomVertices(int[] vertexRange, JPanel panel) {
+        Random rand = new Random();
+        int vertexCount = rand.nextInt(vertexRange[0], vertexRange[1]+1);
+
         // Set up vertices
-        for (int i = 0; i < maxVertices; i++) {
+        for (int i = 0; i < vertexCount; i++) {
             addVertex(randomPosition(panel));
         }
 
         // Generate a random planar graph using the package JGraphT
-        SimpleGraph<Integer, DefaultEdge> underlying = PlanarGraphGenerator.genPlanarGraph(maxVertices);
+        SimpleGraph<Integer, DefaultEdge> underlying = PlanarGraphGenerator.genPlanarGraph(vertexCount);
 
         // Translate the generated edges into our custom class
         for (DefaultEdge e : underlying.edgeSet()) {

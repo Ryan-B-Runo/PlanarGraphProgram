@@ -48,7 +48,7 @@ public class MainForm extends JFrame {
         c.gridy = 1;
         mainPanel.add(difficultyLabel, c);
 
-        JComboBox<String> difficultyComboBox = new JComboBox<>(new String[]{"Trivial", "Easy", "Hard"});
+        JComboBox<String> difficultyComboBox = new JComboBox<>(new String[]{"Trivial", "Easy", "Medium", "Hard","Impossible"});
         difficultyComboBox.setSelectedIndex(1);
         difficultyComboBox.setFont(smallFont);
         difficultyComboBox.setBorder(BorderFactory.createEmptyBorder(10,10,30,10));
@@ -94,13 +94,33 @@ public class MainForm extends JFrame {
                 goButton.setText("Reset");
                 String option = (String) difficultyComboBox.getSelectedItem();
                 assert option != null;
-                int v = switch (option) {// difficulty corresponds to the maximum number of vertices in the maximal planar graph of a given number of "recursive steps" in my algorithm
-                    case "Trivial" -> 3;
-                    case "Easy" -> 7;
-                    case "Hard" -> 16;
-                    default -> 0;
-                };
-                s.addRandomVertices(v, panel);
+
+                int[] vertexBounds = new int[2];
+                switch (option) {
+                    case "Easy" -> {
+                        vertexBounds[0] = 5;
+                        vertexBounds[1] = 6;
+                    }
+                    case "Medium" -> {
+                        vertexBounds[0] = 7;
+                        vertexBounds[1] = 10;
+                    }
+                    case "Hard" -> {
+                        vertexBounds[0] = 11;
+                        vertexBounds[1] = 15;
+                    }
+                    case "Impossible" -> {
+                        vertexBounds[0] = 16;
+                        vertexBounds[1] = 21;
+                    }
+                    default -> {
+                        // Default to trivial settings
+                        vertexBounds[0] = 2;
+                        vertexBounds[1] = 4;
+                    }
+                }
+
+                s.addRandomVertices(vertexBounds, panel);
             }else{
                 goButton.setText("Go");
                 vertices.clear();
